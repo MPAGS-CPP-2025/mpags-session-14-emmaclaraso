@@ -2,6 +2,7 @@
 #include "CipherMode.hpp"
 #include "CipherType.hpp"
 #include "PlayfairCipher.hpp"
+#include "VigenereCipher.hpp"
 #include "ProcessCommandLine.hpp"
 #include "TransformChar.hpp"
 
@@ -99,6 +100,11 @@ int main(int argc, char* argv[])
         }
         case CipherType::Playfair: {
             PlayfairCipher cipher{settings.cipherKey};
+            outputText = cipher.applyCipher(inputText, settings.cipherMode);
+            break;
+        }
+        case CipherType::Vigenere: {
+            VigenereCipher cipher{settings.cipherKey};
             outputText = cipher.applyCipher(inputText, settings.cipherMode);
             break;
         }
