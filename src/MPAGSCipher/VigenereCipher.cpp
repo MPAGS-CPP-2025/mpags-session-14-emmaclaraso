@@ -42,10 +42,23 @@ void VigenereCipher::setKey(const std::string& key){
         charLookup_.insert(std::make_pair(letter, cipher));
         }
         
-
 }
 
-std::string VigenereCipher::applyCipher(const std::string& inputText, const CipherMode) const
+std::string VigenereCipher::applyCipher(const std::string& inputText, const CipherMode cipherMode) const
 {
-return inputText;
+   
+    std::string outputText{""};    
+    // For each letter in input:
+    for (std::size_t i{0}; i < inputText.size(); ++i) {
+        // Find the corresponding letter in the key, repeating/truncating as required
+        char keyChar = key_[i % key_.size()];
+        // Find the Caesar cipher from the lookup
+        const CaesarCipher& cipher{charLookup_.at(keyChar)};
+        // Run the (de)encryption
+        const std::string inputChar{inputText[i]};
+        // Add the result to the output
+        outputText += cipher.applyCipher(inputChar, cipherMode);
+    }
+    
+    return inputText;
 }
